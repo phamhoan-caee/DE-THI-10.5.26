@@ -369,41 +369,50 @@
         document.getElementById('submitBtn').disabled = true;
         document.getElementById('submitBtn').innerText = "ĐANG LƯU...";
 
-        let score = 0;
+       let score = 0;
         selectedQuestions.forEach((q, i) => {
             const ans = studentAnswers.find(a => a.qIndex === i);
-            const labels = ['A', 'B', 'C', 'D'];
-            if(ans && labels[q.options.indexOf(ans.selected)] === q.answer) score++;
+            if(ans && ['A','B','C','D'][q.options.indexOf(ans.selected)] === q.answer) score++;
         });
 
+  // 1. Tính toán điểm số hệ 10 và trạng thái
         const score10 = parseFloat(((score / 30) * 10).toFixed(1));
-        const status = score10 >= 8.3 ? "ĐẠT" : "KHÔNG ĐẠT";
+        const status = score10 >= 5.0 ? "ĐẠT" : "KHÔNG ĐẠT";
 
+        // 2. Cập nhật thông tin học viên lên bảng kết quả
         document.getElementById('res-name').innerText = document.getElementById('studentName').value;
         document.getElementById('res-dob').innerText = document.getElementById('studentDOB').value || "Chưa nhập";
         document.getElementById('res-id').innerText = document.getElementById('khoaThi').value;
         document.getElementById('res-score').innerText = score;
 
+        // 3. Kích hoạt phong cách kỹ thuật số (Đổi màu vòng tròn và badge)
         const scoreCircle = document.querySelector('.score-circle');
         const badge = document.getElementById('res-badge');
+        const disc = document.getElementById('res-disclaimer');
 
-        if (score10 >= 8.3) {
+        if (score10 >= 5.0) {
             scoreCircle.className = 'score-circle score-digital-pass';
             badge.style.backgroundColor = "#28a745";
+            disc.classList.add('pass');
         } else {
             scoreCircle.className = 'score-circle score-digital-fail';
             badge.style.backgroundColor = "#dc3545";
+            disc.classList.remove('pass');
         }
 
-        badge.innerText = score10 + " ĐIỂM - " + status;
+        badge.innerText = score10 + " ĐIỂM";
+
+        // 4. Hiển thị màn hình kết quả
         document.getElementById('result-screen').style.display = 'flex';
 
+        // Gửi dữ liệu Google Sheets
         const formData = new URLSearchParams();
         formData.append('maThi', document.getElementById('maThi').value.trim());
         formData.append('name', document.getElementById('studentName').value.toUpperCase());
         formData.append('birthDate', document.getElementById('studentDOB').value);
         formData.append('score', score10);
         formData.append('status', status);
+
         try { await fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", body: formData }); } catch (e) {}
 
         let c = 15;
@@ -413,7 +422,7 @@
         }, 1000);
     }
 
-    // Hệ thống giám sát thoát Tab thông minh
+   // Hệ thống giám sát thoát Tab thông minh
 document.addEventListener("visibilitychange", function() {
     const quizScreen = document.getElementById('quiz-screen');
     
