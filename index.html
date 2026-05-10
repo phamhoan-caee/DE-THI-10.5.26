@@ -148,11 +148,21 @@
 </head>
 <body oncontextmenu="return false">
 
-    <div id="warning-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,0,0,0.9); color: white; z-index: 10000; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+    <div id="warning-overlay">
         <h1 style="font-size: 80px;">⚠️</h1>
-        <h2 style="letter-spacing: 5px;">HỆ THỐNG PHÁT HIỆN VI PHẠM</h2>
-        <p>Vui lòng không rời khỏi màn hình kiểm tra.</p>
-        <div id="cheat-count-msg" style="margin-top: 15px; font-size: 1.5rem; font-weight: 800; font-family: monospace;"></div>
+        <h2>CẢNH BÁO VI PHẠM!</h2>
+        <div id="cheat-count-msg" style="margin-top: 15px; font-size: 1.5rem; font-weight: 800;"></div>
+    </div>
+
+    <div id="confirm-modal-overlay">
+        <div class="confirm-modal-content">
+            <h3 style="color: var(--caee-blue); margin-bottom: 15px;">XÁC NHẬN NỘP BÀI</h3>
+            <p style="font-weight: 600; color: #333; margin-bottom: 25px;">Bạn có chắc chắn muốn kết thúc bài thi và nộp bài ngay bây giờ?</p>
+            <div style="display: flex; gap: 15px;">
+                <button class="btn-start" style="background: #666;" onclick="closeConfirmModal()">HỦY</button>
+                <button class="btn-start" style="background: var(--caee-blue);" onclick="finalizeSubmission()">ĐỒNG Ý</button>
+            </div>
+        </div>
     </div>
 
     <div id="timer" class="timer-floating">20:00</div>
