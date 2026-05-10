@@ -143,7 +143,7 @@
             font-size: 0.95rem; color: #ffca28;
         }
 
-        @media (max-width: 900px) { #quiz-screen { grid-template-columns: 1fr; } }
+          @media (max-width: 900px) { #quiz-screen { grid-template-columns: 1fr; } .timer-floating { font-size: 1.1rem; } }
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -154,17 +154,18 @@
         <div id="cheat-count-msg" style="margin-top: 15px; font-size: 1.5rem; font-weight: 800;"></div>
     </div>
 
-    <div id="confirm-modal-overlay">
-        <div class="confirm-modal-content">
-            <h3 style="color: var(--caee-blue); margin-bottom: 15px;">XÁC NHẬN NỘP BÀI</h3>
-            <p style="font-weight: 600; color: #333; margin-bottom: 25px;">Bạn có chắc chắn muốn kết thúc bài thi và nộp bài ngay bây giờ?</p>
-            <div style="display: flex; gap: 15px;">
-                <button class="btn-start" style="background: #666;" onclick="closeConfirmModal()">HỦY</button>
-                <button class="btn-start" style="background: var(--caee-blue);" onclick="finalizeSubmission()">ĐỒNG Ý</button>
-            </div>
+   <div id="confirm-modal-overlay">
+    <div class="confirm-modal-content">
+        <h3 style="color: var(--neon-blue); margin-bottom: 15px; letter-spacing: 1px;">XÁC NHẬN KẾT THÚC</h3>
+        <p style="color: #ccc; font-size: 0.95rem; line-height: 1.5;">
+            Hệ thống sẽ ghi nhận kết quả và đóng bài thi. <br>Bạn có chắc chắn muốn nộp bài không?
+        </p>
+        <div class="confirm-btns">
+            <button class="btn-start btn-cancel" onclick="closeConfirmModal()">HỦY LỆNH</button>
+            <button class="btn-start btn-confirm" onclick="finalizeSubmission()">NỘP BÀI</button>
         </div>
     </div>
-
+</div>
     <div id="timer" class="timer-floating">20:00</div>
 
     <div id="start-screen">
