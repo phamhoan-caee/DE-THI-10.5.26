@@ -159,7 +159,7 @@
             <input type="text" id="studentDOB" placeholder="Ngày sinh: (VD: 12/4/2000)" class="form-control">
             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                 <input type="text" id="KHÓA THI" value="Tháng 6/2026" class="form-control" style="flex: 1.5; background: #eee; font-weight: bold;" readonly>
-                <input type="password" id="MÃ THI" placeholder="Mã thi" class="form-control" style="flex: 1;">
+                <input type="password" id="mathi" placeholder="mathi" class="form-control" style="flex: 1;">
             </div>
             <div style="display:flex; align-items:center; margin: 15px 0; justify-content: center; gap:10px; background: rgba(227, 242, 253, 0.8); padding: 10px; border-radius: 10px;">
                 <input type="checkbox" id="modeToggle" style="width:20px; height:20px; cursor: pointer;">
@@ -234,7 +234,17 @@
         utter.onend = () => { document.getElementById('ai-waves').style.display = 'none'; };
         synth.speak(utter);
     }
-
+function playWarningAI(count) {
+    let msg = "";
+    if (count === 1) msg = "Cảnh báo lần một. Vui lòng không rời khỏi màn hình làm bài.";
+    else if (count === 2) msg = "Cảnh báo lần hai. Nếu tiếp tục vi phạm hệ thống sẽ tự động nộp bài.";
+    else msg = "Bạn đã vi phạm quá nhiều lần. Hệ thống đang tiến hành nộp bài tự động.";
+    
+    const utter = new SpeechSynthesisUtterance(msg);
+    utter.lang = 'vi-VN';
+    window.speechSynthesis.cancel(); // Tắt các giọng đang nói để ưu tiên cảnh báo
+    window.speechSynthesis.speak(utter);
+}
     window.onload = preloadQuestions;
 
     function preloadQuestions() {
@@ -261,7 +271,7 @@
     }
 
     async function validateAndStart() {
-        const maThi = document.getElementById('MÃ THI').value.trim();
+        const maThi = document.getElementById('mathi').value.trim();
         const name = document.getElementById('studentName').value.trim();
         if(!name || !maThi) return alert("Nhập đủ thông tin!");
         const btn = document.getElementById('btnStart');
