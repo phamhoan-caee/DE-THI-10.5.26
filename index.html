@@ -309,15 +309,15 @@
         synth.speak(utter);
     }
 
-    // AI đọc giải thích
+  // AI đọc giải thích (Chỉ khi ở chế độ ôn tập)
     function aiSpeakExplanation(qObj) {
         if (!document.getElementById('modeToggle').checked || !isVoiceEnabled) return;
-        synth.cancel();
+        stopSpeaking();
         
         const textToRead = `Đáp án đúng là ${qObj.answer}. Giải thích: ${qObj.explanation}`;
         const utter = new SpeechSynthesisUtterance(textToRead);
         utter.lang = 'vi-VN';
-        utter.rate = 1.0;
+        utter.rate = 1.1;
         utter.onstart = () => { document.getElementById('ai-waves').style.display = 'flex'; };
         utter.onend = () => { document.getElementById('ai-waves').style.display = 'none'; };
         synth.speak(utter);
@@ -329,7 +329,7 @@
         if (!isVoiceEnabled) return;
         const msg = new SpeechSynthesisUtterance();
         msg.lang = 'vi-VN';
-        msg.text = (count < 3) ? `Cảnh báo lần ${count}! Học viên không được thoát tab.` : "Vi phạm quá 3 lần, hệ thống tự động nộp bài!";
+        msg.text = (count < 3) ? `Cảnh báo lần ${count}! Học viên không được thoát bài thi.` : "Vi phạm quá 3 lần, hệ thống tự động nộp bài!";
         synth.speak(msg);
     }
 
@@ -392,6 +392,7 @@
     }
 
     function showQuestion(idx) {
+        stopSpeaking(); // Dừng đọc ngay khi bấm chuyển câu (Lùi lại/Tiếp theo/Chọn số câu)
         currentQuestionIndex = idx;
         const q = selectedQuestions[idx];
         const stored = studentAnswers.find(a => a.qIndex === idx);
@@ -422,6 +423,7 @@
 
     function selectAns(qIdx, ans) {
         if(isSubmitted) return;
+        stopSpeaking(); // Dừng đọc câu hỏi khi học viên đã chọn đáp án
         const findIndex = studentAnswers.findIndex(a => a.qIndex === qIdx);
         if(findIndex > -1) studentAnswers[findIndex].selected = ans;
         else studentAnswers.push({qIndex: qIdx, selected: ans});
