@@ -336,7 +336,7 @@
         stopSpeaking();
         const msg = new SpeechSynthesisUtterance();
         msg.lang = 'vi-VN';
-        msg.text = (count < 3) ? `Cảnh báo lần ${count}! Học viên không được thoát tab.` : "Vi phạm quá 3 lần, hệ thống tự động nộp bài!";
+        msg.text = (count < 3) ? `Cảnh báo lần ${count}! Học viên không được thoát bài thi` : "vi phạm quá 3 lần, hệ thống tự động nộp bài!";
         synth.speak(msg);
     }
 
